@@ -125,7 +125,7 @@ has_search_path(){
 	return false
 }
 update_scripts(){
-	echo update scripts
+	echo update scripts was called.
 }
 
 # End of my code.
