@@ -113,12 +113,16 @@ fi
 
 # Start of my code.
 
-has_search_path($path){
+has_search_path(){
+	local $search_path="$1"
 	p=$(echo $PATH | tr ":" "\n")
 	for $q in $p
 	do
-		echo $q
+		if [[ "$q" == "$search_path" ]]; then
+			return true
+		fi
 	done
+	return false
 }
 update_scripts(){
 	echo update scripts
