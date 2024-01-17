@@ -113,6 +113,13 @@ fi
 
 # Start of my code.
 
+has_search_path($path){
+	p=$(echo $PATH | tr ":" "\n")
+	for $q in $p
+	do
+		echo $q
+	done
+}
 update_scripts(){
 	echo update scripts
 }
