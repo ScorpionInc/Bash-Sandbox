@@ -135,6 +135,7 @@ get_fqdn(){
 	if [[ "${fqn}" == "" ]]; then fqn=$(hostname -s) 2> /dev/null; fi;
 	return $fqn
 }
+# Text-Art Sourced/Modified from: https://emojicombos.com/scorpion-ascii-art
 BANNER_ICON="
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣴⣶⣶⣶⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣧⣝⠛⠛⠋⢾⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -158,5 +159,8 @@ echo_profile_banner(){
 	echo "$(get_fqdn) $(date)"
 	echo ""
 }
+
+cls
+echo_profile_banner
 
 # End of my code.
