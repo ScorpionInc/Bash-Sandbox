@@ -75,8 +75,8 @@ esac
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
+    alias ls='ls -F --color=tty'
+    alias dir='dir --color=auto --format=vertical'
     alias vdir='vdir --color=auto'
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -113,6 +113,17 @@ fi
 
 # Start of my code.
 
+# Loads function(s) script(s) from path similar to alias scripts above.
+#if [ -f "${HOME}/.bash_functions" ]; then
+#	source "${HOME}/.bash_functions"
+#fi
+
+# Changes the window title with ANSI Codes
+set_title(){
+	echo -ne "\e]2;$@\a\e]1;$@\a";
+}
+
+# Tests if a path is defined within the $PATH variable
 has_search_path(){
 	local $search_path="$1"
 	p=$(echo $PATH | tr ":" "\n")
@@ -127,6 +138,7 @@ has_search_path(){
 update_scripts(){
 	echo update scripts was called.
 }
+
 # Returns current Fully Qualified domain name(hopefully).
 get_fqdn(){
 	# Getting the FQDN methods seem to be inconsistent. TODO Fix errors for msys compatibility(broken).
@@ -153,6 +165,7 @@ BANNER_ICON="
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⢸⣿⣿⣿⣿⡿⠟⠿⠛⠟⠉⠃⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠉⠺⠷⢦⠶⠷⠊⠀⠀⠀⠀⠀⠀⠀⠀
 "
+# Prints Banner with some basic information on shell open.
 echo_profile_banner(){
 	echo "$BANNER_ICON"
 	echo "Welcome back, \\\\$(hostname)\\$(id -u -n):$(id -g -n)."
