@@ -123,11 +123,6 @@ umask 037
 #	source "${HOME}/.bash_functions"
 #fi
 
-# Changes the window title with ANSI Codes
-set_title(){
-	echo -ne "\e]2;$@\a\e]1;$@\a";
-}
-
 # Tests if a path is defined within the $PATH variable
 has_search_path(){
 	local $search_path="$1"
@@ -153,8 +148,14 @@ get_fqdn(){
 	return $fqn
 }
 
-# ANSI Color Table
-# Code Sourced from: https://github.com/vaniacer/bash_color/blob/master/color
+# ANSI Code functions/definitions
+
+# Changes the window title with ANSI Codes
+set_title(){
+	echo -ne "\e]2;$@\a\e]1;$@\a";
+}
+
+# Following code was sourced from: https://github.com/vaniacer/bash_color/blob/master/color
 
 #--------------------------------------------------------------------+
 #Color picker, usage: printf $BLD$CUR$RED$BBLU'Hello World!'$DEF     |
@@ -248,10 +249,10 @@ echo_profile_banner(){
 #openssl list -digest-algorithms | grep -Eo "[a-zA-Z][a-zA-Z0-9 /,-]+" | grep -Ev "(default|NULL|=>|:)" | sed 's/, /\n/g' | sort -fu
 #for digest in ${openssl_digests[@]}; do echo $digest; done;
 #for i in ${!openssl_digests[@]}; do echo "$i is ${openssl_digests[$i]}"; done;
-openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "sha224" "sha256" "sha3-224" "sha3-256" "sha3-384" "sha3-512" "sha384" "sha512" "sha512-224" "sha512-256" "shake128" "shake256" "sm3")
+openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "sha224" "sha256" "sha384" "sha512" "sha3-224" "sha3-256" "sha3-384" "sha3-512" "sha512-224" "sha512-256" "shake128" "shake256" "sm3")
 # /usr/bin/{$i}sum
 sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
-
+# blake2b512 CRC32(?) md5
 alias cls='clear'
 
 clear
