@@ -294,8 +294,9 @@ echo_profile_banner(){
 		#print_centered "${icon_line}";
 	#done
 	print_centered "$BANNER_ICON";
-	print_centered "${WHT}Welcome back, ./$(id -u -n):$(id -g -n)."
-	print_centered "$(get_fqdn) $(date)${DEF}"
+	print_centered ""
+	print_centered "${wht}Welcome back, ${BLD}$(id -u -n):$(id -g -n)${DEF}${wht}.${DEF}"
+	print_centered "${wht}$(get_fqdn)${DEF} ${wht}${UND}$(date)${DEF}"
 	print_centered ""
 }
 
