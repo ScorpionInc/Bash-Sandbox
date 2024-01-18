@@ -200,7 +200,7 @@ function print_centered {
      declare -i TERM_COLS="$(tput cols)"
      declare -i str_len="${#1}"
      [[ $str_len -ge $TERM_COLS ]] && {
-          echo "$1";
+          printf "${1}";
           return 0;
      }
      declare -i filler_len="$(( (TERM_COLS - str_len) / 2 ))"
@@ -217,29 +217,30 @@ function print_centered {
 # End of modified source
 
 # Text-Art Sourced/Modified from: https://emojicombos.com/scorpion-ascii-art
-BANNER_ICON="
+BANNER_ICON="${ylw}
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣴⣶⣶⣶⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣧⣝⠛⠛⠋⢾⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⣠⡙⠿⡟⠋⢀⣀⣀⣌⣽⣯⡷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠁⠐⠉⠈⢻⣷⡻⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣠⡙⠿⡟⠋${DEF}${RED}⢀⣀⣀${DEF}${ylw}⣌⣽⣯⡷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠁${DEF}${red}⠐${DEF}${RED}⠉⠈${DEF}${ylw}⢻⣷⡻⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⣩⣶⣧⡀⠀⠀⢀⣸⣿⠿⢛⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⣿⣯⣷⣶⣦⣠⡾⢡⣾⢿⡿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⢀⣠⡿⠻⣆⣘⢸⣿⣻⣾⣿⡷⣛⠵⢟⣱⡾⣻⣷⣿⢶⣤⣴⣤⠀⠀⠀
 ⠀⠀⣸⠟⣡⣤⣤⣬⣿⣣⣅⣿⡿⣷⣿⣿⣿⣞⠋⣐⣻⠏⣜⠛⢿⣿⣽⣷⣄⠀
 ⠀⢀⡇⢐⣿⢁⡴⠽⣷⣾⡿⠻⣷⣹⡛⠿⠿⣭⣜⡛⠃⠀⠹⠤⠀⠘⣿⣿⣿⣷
-⠐⠉⠀⠈⣿⢸⣇⢰⡾⠿⠿⠛⠛⠋⡥⢾⠃⣍⠉⠿⠀⠀⠀⠀⣰⣿⠿⠟⢛⡋
-⠀⠀⠀⠀⣺⢘⡏⢸⠟⠀⢐⣭⢻⠿⣿⠏⠁⠈⠀⠀⠀⠀⠀⠀⠿⠋⠀⢀⣾⠇
-⠀⠀⠀⠈⠁⠀⣹⠹⣆⢠⣿⣿⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⠟⠁⠀
-⠀⠀⠀⠀⠀⠘⠁⠀⡾⠸⣿⣟⣿⣷⣶⣶⣤⣀⣀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⢸⣿⣿⣿⣿⡿⠟⠿⠛⠟⠉⠃⠀⠀⠀⠀⠀⠀⠀
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠉⠺⠷⢦⠶⠷⠊⠀⠀⠀⠀⠀⠀⠀⠀
-"
+⠐⠉⠀⠈⣿⢸⣇⢰⡾⠿⠿⠛⠛⠋⡥⢾⠃⣍⠉⠿⠀⠀⠀⠀${DEF}${YLW}⣰⣿⠿⠟⢛⡋${DEF}${ylw}
+⠀⠀⠀⠀⣺⢘⡏⢸⠟⠀⢐⣭⢻⠿⣿⠏⠁⠈⠀⠀⠀⠀⠀⠀${DEF}${YLW}⠿⠋⠀⢀⣾⠇${DEF}${ylw}
+⠀⠀⠀⠈⠁⠀⣹⠹⣆⢠⣿⣿⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀${DEF}${YLW}⠠⠟⠁${DEF}${ylw}⠀
+⠀⠀⠀⠀⠀⠘⠁⠀⡾⠸⣿⣟⣿⣷⣶⣶⣤${DEF}${YLW}⣀⣀⣀⣀⣀${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⢸⣿⣿⣿⣿⡿${DEF}${YLW}⠟⠿⠛⠟⠉⠃${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠉${DEF}${YLW}⠺⠷⢦⠶⠷⠊${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀⠀
+${DEF}"
 # Prints Banner with some basic information on shell open.
 echo_profile_banner(){
-	echo "$BANNER_ICON"
-	echo "Welcome back, \\\\$(hostname)\\$(id -u -n):$(id -g -n)."
-	echo "$(get_fqdn) $(date)"
-	echo ""
+	# TODO Fix print_centered function for multi-line inputs.
+	print_centered "$BANNER_ICON"
+	print_centered "${WHT}Welcome back, \\\\$(hostname)\\$(id -u -n):$(id -g -n)."
+	print_centered "$(get_fqdn) $(date)${DEF}"
+	print_centered ""
 }
 
 # Hashing Stuffs (WIP)
