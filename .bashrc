@@ -159,7 +159,7 @@ get_fqdn(){
 		echo -n "${fqn}"
 		return 0;
 	fi
-	echo -n "${h}"
+	echo -n '\\\\'"${h}"
 	return 1;
 }
 
@@ -254,7 +254,7 @@ ${DEF}"
 echo_profile_banner(){
 	# TODO Fix print_centered function for multi-line inputs.
 	print_centered "$BANNER_ICON"
-	print_centered "${WHT}Welcome back, \\\\$(hostname)\\$(id -u -n):$(id -g -n)."
+	print_centered "${WHT}Welcome back, ./$(id -u -n):$(id -g -n)."
 	print_centered "$(get_fqdn) $(date)${DEF}"
 	print_centered ""
 }
