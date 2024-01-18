@@ -250,10 +250,14 @@ BANNER_ICON="${ylw}
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⢸⣿⣿⣿⣿⡿${DEF}${YLW}⠟⠿⠛⠟⠉⠃${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠉${DEF}${YLW}⠺⠷⢦⠶⠷⠊${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀⠀
 ${DEF}"
+#BANNER_ICON=("${ylw}\n" "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣴⣶⣶⣶⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⣧⣝⠛⠛⠋⢾⣿⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⣠⡙⠿⡟⠋${DEF}${RED}⢀⣀⣀${DEF}${ylw}⣌⣽⣯⡷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⠁${DEF}${red}⠐${DEF}${RED}⠉⠈${DEF}${ylw}⢻⣷⡻⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⣩⣶⣧⡀⠀⠀⢀⣸⣿⠿⢛⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⣿⣯⣷⣶⣦⣠⡾⢡⣾⢿⡿⣿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⢀⣠⡿⠻⣆⣘⢸⣿⣻⣾⣿⡷⣛⠵⢟⣱⡾⣻⣷⣿⢶⣤⣴⣤⠀⠀⠀" "⠀⠀⣸⠟⣡⣤⣤⣬⣿⣣⣅⣿⡿⣷⣿⣿⣿⣞⠋⣐⣻⠏⣜⠛⢿⣿⣽⣷⣄⠀" "⠀⢀⡇⢐⣿⢁⡴⠽⣷⣾⡿⠻⣷⣹⡛⠿⠿⣭⣜⡛⠃⠀⠹⠤⠀⠘⣿⣿⣿⣷" "⠐⠉⠀⠈⣿⢸⣇⢰⡾⠿⠿⠛⠛⠋⡥⢾⠃⣍⠉⠿⠀⠀⠀⠀${DEF}${YLW}⣰⣿⠿⠟⢛⡋${DEF}${ylw}" "⠀⠀⠀⠀⣺⢘⡏⢸⠟⠀⢐⣭⢻⠿⣿⠏⠁⠈⠀⠀⠀⠀⠀⠀${DEF}${YLW}⠿⠋⠀⢀⣾⠇${DEF}${ylw}" "⠀⠀⠀⠈⠁⠀⣹⠹⣆⢠⣿⣿⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀${DEF}${YLW}⠠⠟⠁${DEF}${ylw}⠀" "⠀⠀⠀⠀⠀⠘⠁⠀⡾⠸⣿⣟⣿⣷⣶⣶⣤${DEF}${YLW}⣀⣀⣀⣀⣀${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⢸⣿⣿⣿⣿⡿${DEF}${YLW}⠟⠿⠛⠟⠉⠃${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀" "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠛⠉${DEF}${YLW}⠺⠷⢦⠶⠷⠊${DEF}${ylw}⠀⠀⠀⠀⠀⠀⠀⠀" "${DEF}")
 # Prints Banner with some basic information on shell open.
 echo_profile_banner(){
 	# TODO Fix print_centered function for multi-line inputs.
-	print_centered "$BANNER_ICON"
+	#for icon_line in ${BANNER_ICON[@]}; do
+		#print_centered "${icon_line}";
+	#done
+	print_centered "$BANNER_ICON";
 	print_centered "${WHT}Welcome back, ./$(id -u -n):$(id -g -n)."
 	print_centered "$(get_fqdn) $(date)${DEF}"
 	print_centered ""
