@@ -141,11 +141,26 @@ update_scripts(){
 
 # Returns current Fully Qualified domain name(hopefully).
 get_fqdn(){
-	# Getting the FQDN methods seem to be inconsistent. TODO Fix errors for msys compatibility(broken).
+	# Getting the FQDN methods seem to be inconsistent.
 	# Reference code: https://serverfault.com/a/367682
-	fqn=$(host -TtA $(hostname -s) | grep "has address" | awk '{print $1}' 2> /dev/null);
-	if [[ "${fqn}" == "" ]]; then fqn=$(hostname -s) 2> /dev/null; fi;
-	return $fqn
+	h=$(hostname -s 2> /dev/null)
+	if [ $? -ne 0 ]; then
+		h=$(hostname 2> /dev/null)
+		if [ $? -ne 0 ]; then
+			echo -n "${1:-<Unknown>}"
+			return 2;
+		fi
+	fi
+	if command -v host &> /dev/null; then
+		fqn=$(host -TtA ${h} | grep "has address" | awk '{print $1}');
+		if [[ "${fqn}" == "" ]]; then
+			fqn=$(h);
+		fi
+		echo -n "${fqn}"
+		return 0;
+	fi
+	echo -n "${h}"
+	return 1;
 }
 
 # ANSI Code functions/definitions
