@@ -212,23 +212,23 @@ que(){ printf -v _N %$1s; _N=(${_N// / 1}); printf "${!_N[*]}"; }   #|
 
 # Modified from source: https://gist.github.com/TrinityCoder/911059c83e5f7a351b785921cf7ecdaa#file-center_text_in_bash-md
 function print_centered {
-     [[ $# == 0 ]] && return 1
-     declare -i TERM_COLS="$(tput cols)"
-     declare -i str_len="${#1}"
-     [[ $str_len -ge $TERM_COLS ]] && {
-          printf "${1}";
-          return 0;
-     }
-     declare -i filler_len="$(( (TERM_COLS - str_len) / 2 ))"
-     [[ $# -ge 2 ]] && ch="${2:0:1}" || ch=" "
-     filler=""
-     for (( i = 0; i < filler_len; i++ )); do
-          filler="${filler}${ch}"
-     done
-     printf "${filler}${1}${filler}"
-     [[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "${ch}"
-     printf "\n"
-     return 0;
+	[[ $# == 0 ]] && return 1
+	declare -i TERM_COLS="$(tput cols)"
+	declare -i str_len="${#1}"
+	[[ $str_len -ge $TERM_COLS ]] && {
+		printf "${1}";
+		return 0;
+	}
+	declare -i filler_len="$(( (TERM_COLS - str_len) / 2 ))"
+	[[ $# -ge 2 ]] && ch="${2:0:1}" || ch=" "
+	filler=""
+	for (( i = 0; i < filler_len; i++ )); do
+		filler="${filler}${ch}"
+	done
+	printf "${filler}${1}${filler}"
+	[[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "${ch}"
+	printf "\n"
+	return 0;
 }
 # End of modified source
 
