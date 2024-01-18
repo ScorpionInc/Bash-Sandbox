@@ -190,7 +190,7 @@ get_fqdn(){
 	if command -v host &> /dev/null; then
 		fqn=$(host -TtA ${h} | grep "has address" | awk '{print $1}');
 		if [[ "${fqn}" == "" ]]; then
-			fqn=$(h);
+			fqn="${h}";
 		fi
 		echo -n "${fqn}"
 		return 0;
@@ -309,7 +309,9 @@ openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "s
 # /usr/bin/{$i}sum
 sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
 # blake2b512 CRC32(?) md5
+
 alias cls='clear'
+alias ps='ps -elf'
 
 clear
 echo_profile_banner
