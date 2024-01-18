@@ -178,6 +178,14 @@ echo_profile_banner(){
 	echo ""
 }
 
+# Hashing Stuffs (WIP)
+#openssl list -digest-algorithms | grep -Ev "(=>|:)" | grep -Eo "[a-zA-Z][a-zA-Z0-9 /,-]+" | grep -v "default" | sed 's/, /\n/g' | sort
+#for digest in ${openssl_digests[@]}; do echo $digest; done;
+#for i in ${!openssl_digests[@]}; do echo "$i is ${openssl_digests[$i]}"; done;
+openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "sha224" "sha256" "sha3-224" "sha3-256" "sha3-384" "sha3-512" "sha384" "sha512" "sha512-224" "sha512-256" "shake128" "shake256" "sm3")
+# /usr/bin/{$i}sum
+sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
+
 cls
 echo_profile_banner
 
