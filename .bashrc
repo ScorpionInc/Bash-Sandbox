@@ -152,6 +152,70 @@ get_fqdn(){
 	if [[ "${fqn}" == "" ]]; then fqn=$(hostname -s) 2> /dev/null; fi;
 	return $fqn
 }
+
+# ANSI Color Table
+# Code Sourced from: https://github.com/vaniacer/bash_color/blob/master/color
+
+#--------------------------------------------------------------------+
+#Color picker, usage: printf $BLD$CUR$RED$BBLU'Hello World!'$DEF     |
+#-------------------------+--------------------------------+---------+
+#       Text color        |       Background color         |         |
+#-----------+-------------+--------------+-----------------+         |
+# Base color|Lighter shade| Base color   | Lighter shade   |         |
+#-----------+-------------+--------------+-----------------+         |
+BLK='\e[30m'; blk='\e[90m'; BBLK='\e[40m'; bblk='\e[100m' #| Black   |
+RED='\e[31m'; red='\e[91m'; BRED='\e[41m'; bred='\e[101m' #| Red     |
+GRN='\e[32m'; grn='\e[92m'; BGRN='\e[42m'; bgrn='\e[102m' #| Green   |
+YLW='\e[33m'; ylw='\e[93m'; BYLW='\e[43m'; bylw='\e[103m' #| Yellow  |
+BLU='\e[34m'; blu='\e[94m'; BBLU='\e[44m'; bblu='\e[104m' #| Blue    |
+MGN='\e[35m'; mgn='\e[95m'; BMGN='\e[45m'; bmgn='\e[105m' #| Magenta |
+CYN='\e[36m'; cyn='\e[96m'; BCYN='\e[46m'; bcyn='\e[106m' #| Cyan    |
+WHT='\e[37m'; wht='\e[97m'; BWHT='\e[47m'; bwht='\e[107m' #| White   |
+#-------------------------{ Effects }----------------------+---------+
+DEF='\e[0m'   #Default color and effects                             |
+BLD='\e[1m'   #Bold\brighter                                         |
+DIM='\e[2m'   #Dim\darker                                            |
+CUR='\e[3m'   #Italic font                                           |
+UND='\e[4m'   #Underline                                             |
+INV='\e[7m'   #Inverted                                              |
+COF='\e[?25l' #Cursor Off                                            |
+CON='\e[?25h' #Cursor On                                             |
+#------------------------{ Functions }-------------------------------+
+# Text positioning, usage: XY 10 10 'Hello World!'                   |
+XY(){ printf "\e[$2;${1}H$3"; }                                     #|
+# Print line, usage: line - 10 | line -= 20 | line 'Hello World!' 20 |
+line(){ printf -v _L %$2s; printf -- "${_L// /$1}"; }               #|
+# Create sequence like {0..(X-1)}, usage: que 10                     |
+que(){ printf -v _N %$1s; _N=(${_N// / 1}); printf "${!_N[*]}"; }   #|
+#--------------------------------------------------------------------+
+# loops are better on large scales like 20000+ but fail on 1000 or less
+# line(){ for ((i=0; i<$2; i++)); { printf -- '%s' "$1"; }
+# que(){ printf 0; for ((i=1; i<$1; i++)); { printf -- " %s" $i; }
+
+# END Code Sourced from: https://github.com/vaniacer/bash_color/blob/master/color
+
+# Modified from source: https://gist.github.com/TrinityCoder/911059c83e5f7a351b785921cf7ecdaa#file-center_text_in_bash-md
+function print_centered {
+     [[ $# == 0 ]] && return 1
+     declare -i TERM_COLS="$(tput cols)"
+     declare -i str_len="${#1}"
+     [[ $str_len -ge $TERM_COLS ]] && {
+          echo "$1";
+          return 0;
+     }
+     declare -i filler_len="$(( (TERM_COLS - str_len) / 2 ))"
+     [[ $# -ge 2 ]] && ch="${2:0:1}" || ch=" "
+     filler=""
+     for (( i = 0; i < filler_len; i++ )); do
+          filler="${filler}${ch}"
+     done
+     printf "${filler}${1}${filler}"
+     [[ $(( (TERM_COLS - str_len) % 2 )) -ne 0 ]] && printf "${ch}"
+     printf "\n"
+     return 0;
+}
+# End of modified source
+
 # Text-Art Sourced/Modified from: https://emojicombos.com/scorpion-ascii-art
 BANNER_ICON="
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⣴⣶⣶⣶⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -179,7 +243,8 @@ echo_profile_banner(){
 }
 
 # Hashing Stuffs (WIP)
-#openssl list -digest-algorithms | grep -Ev "(=>|:)" | grep -Eo "[a-zA-Z][a-zA-Z0-9 /,-]+" | grep -v "default" | sed 's/, /\n/g' | sort
+#openssl list -digest-algorithms | grep -Ev "(=>|:)" | grep -Eo "[a-zA-Z][a-zA-Z0-9 /,-]+" | grep -Ev "(default|NULL)" | sed 's/, /\n/g' | sort -fu
+#openssl list -digest-algorithms | grep -Eo "[a-zA-Z][a-zA-Z0-9 /,-]+" | grep -Ev "(default|NULL|=>|:)" | sed 's/, /\n/g' | sort -fu
 #for digest in ${openssl_digests[@]}; do echo $digest; done;
 #for i in ${!openssl_digests[@]}; do echo "$i is ${openssl_digests[$i]}"; done;
 openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "sha224" "sha256" "sha3-224" "sha3-256" "sha3-384" "sha3-512" "sha384" "sha512" "sha512-224" "sha512-256" "shake128" "shake256" "sm3")
