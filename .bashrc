@@ -135,8 +135,44 @@ has_search_path(){
 	done
 	return false
 }
+# Updates scripts from my(maybe other peoples eventually?) github repo(s).
+# TODO
 update_scripts(){
 	echo update scripts was called.
+}
+
+# Attempts to detect the init system installed on the current box by looking at /sbin/init.
+# Modified from code: https://unix.stackexchange.com/a/325832
+find_init_type(){
+	if ! test -f /sbin/init; then
+		echo "NONE";
+		return 1;
+	fi
+	cat /sbin/init | awk 'match($0, /(upstart|systemd|sysvinit)/) { print toupper(substr($0, RSTART, RLENGTH));exit; }' 2> /dev/null
+	return 0;
+}
+
+# Lists Services based upon init system
+ls_services(){
+	case $(find_init_type) in
+	"UPSTART")
+		sudo initctl list;
+		return 0;
+	;;
+	"SYSTEMD")
+		#ls /lib/systemd/system/*.service /etc/systemd/system/*.service
+		sudo systemctl --all list-unit-files --type=service
+		return 0;
+	;;
+	"SYSVINIT")
+		#ls /etc/init.d/
+		#ls /etc/rc*.d/
+		sudo service --status-all;
+		return 0;
+	;;
+	*)
+	;;
+	esac
 }
 
 # Returns current Fully Qualified domain name(hopefully).
