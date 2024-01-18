@@ -252,7 +252,9 @@ openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "s
 # /usr/bin/{$i}sum
 sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
 
-cls
+alias cls='clear'
+
+clear
 echo_profile_banner
 
 # End of my code.
