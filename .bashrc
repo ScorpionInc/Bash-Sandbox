@@ -171,6 +171,7 @@ ls_services(){
 		return 0;
 	;;
 	*)
+		return 1;
 	;;
 	esac
 }
