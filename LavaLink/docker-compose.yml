@@ -27,7 +27,7 @@ services:
       - 1750
     ports:
       # you only need this if you want to make your lavalink accessible from outside of containers
-      - "1750:1750"
+      - "127.0.0.1:1750:1750"
 networks:
   # create a lavalink network you can add other containers to, to give them access to Lavalink
   lavalink:
