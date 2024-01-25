@@ -8,15 +8,15 @@ echo
 echo Testing initialization settings...
 echo
 if [ -f ~/.local/share/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini ]; then
-        echo "Default Configuration File Exists."
-        if test ! -f ~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini; then
-                cp ~/.local/share/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini ~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
-                nano "~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
-        else
-                echo "PalWorldSettings are already defined."
-        fi
+	echo "Default Configuration File Exists."
+	if test ! -f ~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini; then
+		cp ~/.local/share/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.ini ~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini
+		nano "~/.local/share/Steam/steamapps/common/PalServer/Pal/Saved/Config/LinuxServer/PalWorldSettings.ini"
+	else
+		echo "PalWorldSettings are already defined."
+	fi
 else
-        echo "Default Configuration File not found."
+	echo "Default Configuration File not found."
 fi
 echo
 echo Launching game server at apx. $(date +%s)...
