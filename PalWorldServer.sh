@@ -18,10 +18,11 @@ if [ -f ~/.local/share/Steam/steamapps/common/PalServer/DefaultPalWorldSettings.
 else
 	echo "Default Configuration File not found."
 fi
+launchtime="$(date +%s)"
 echo
-echo Launching game server at apx. $(date +%s)...
+echo Launching game server at apx. $launchtime...
 echo
-nohup /bin/bash -c '~/.local/share/Steam/steamapps/common/PalServer/PalServer.sh -ServerName="ScorpionInc PalWorld Server" -port=8211 -players=12 -log -nosteam -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS EpicApp=PalServer' </dev/null >server.$(date +%s).log 2>&1 &
+nohup /bin/bash -c '~/.local/share/Steam/steamapps/common/PalServer/PalServer.sh -ServerName="ScorpionInc PalWorld Server" -port=8211 -players=12 -log -nosteam -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS EpicApp=PalServer' </dev/null >server.$launchtime.log 2>&1 &
 disown
 echo
 echo Game Server should now be running detached from current session.
