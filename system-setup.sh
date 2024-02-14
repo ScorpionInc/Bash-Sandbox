@@ -15,7 +15,7 @@ autoPurged=("aisleriot" "brltty" "duplicity" "empathy" "empathy-call" "empathy-c
 autoInstallAPTBase=("htop" "flatpak" "libreoffice")
 autoInstallDEBBase=()
 # ufw nftable
-autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables")
+autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker")
 autoInstallDEBWork=()
 autoInstallAPTGame=("wine")
 autoInstallDEBGame=()
@@ -78,6 +78,10 @@ case $installType in
 		for (( c=0; c<${#autoInstallAPTWork[@]}; c++ ))
 		do
 			apt-get install -y "${autoInstallAPTWork[$c]}"
+		done
+		for (( c=0; c<${#autoInstallDEBWork[@]}; c++ ))
+		do
+			:
 		done
 		for (( c=0; c<${#autoInstallAPTGame[@]}; c++ ))
 		do
