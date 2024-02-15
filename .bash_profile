@@ -226,5 +226,8 @@ sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
 alias cls='clear'
 alias ps='ps -elf'
 
-#clear
+clear
 echo_profile_banner
+
+# Source .bashrc from home for .bash_profile
+. ~/.bashrc
