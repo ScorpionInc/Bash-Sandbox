@@ -1,9 +1,9 @@
 # Bash-Sandbox
 Sandbox for Bash Scripting
 
-# Install .bashrc Bash Profile Script.
+# Install .bash_profile Script.
 WGet Method (Run As User):
-> cp ~/.bashrc ~/.bashrc.backup && wget -O ~/.bashrc https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bashrc && . ~/.bashrc
+> [[ -e ~/.bash_profile ]] && cp ~/.bash_profile ~/.bash_profile.backup; wget -O ~/.bash_profile https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bash_profile && . ~/.bash_profile
 
 Curl Method (Run As User):
-> cp ~/.bashrc ~/.bashrc.backup && curl -o ~/.bashrc https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bashrc && . ~/.bashrc
+> [[ -e ~/.bash_profile ]] && cp ~/.bash_profile ~/.bash_profile.backup; curl -o ~/.bash_profile https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bash_profile && . ~/.bash_profile
