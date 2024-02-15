@@ -12,10 +12,10 @@ fi
 # Handle script parameters
 checkFile="~/.si-system-setup.checked"
 autoPurged=("aisleriot" "brltty" "duplicity" "empathy" "empathy-call" "empathy-common" "example-content" "gnome-accessibility-themes" "gnome-contacts" "gnome-mahjongg" "gnome-mines" "gnome-orca" "gnome-screensaver" "gnome-sudoku" "gnome-video-effects" "landscape-common" "libsane" "libsane-common" "rhythmbox" "rhythmbox-plugins" "rhythmbox-plugin-zeitgeist" "sane-utils" "shotwell" "shotwell-common" "telepathy-gabble" "telepathy-haze" "telepathy-idle" "telepathy-indicator" "telepathy-logger" "telepathy-mission-control-5" "telepathy-salut" "totem" "totem-common" "totem-plugins" "printer-driver-brlaser" "printer-driver-foo2zjs" "printer-driver-foo2zjs-common" "printer-driver-m2300w" "printer-driver-ptouch" "printer-driver-splix")
-autoInstallAPTBase=("htop" "flatpak" "libreoffice")
+autoInstallAPTBase=("htop" "flatpak" "libreoffice" "wget")
 autoInstallDEBBase=()
 # ufw nftable
-autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker")
+autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker" "curl")
 autoInstallDEBWork=()
 autoInstallAPTGame=("wine")
 autoInstallDEBGame=()
