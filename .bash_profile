@@ -156,7 +156,7 @@ function escape_backward_slashes(){
 	echo "$safe_str"
 	return 0
 }
-echo $(escape_backward_slashes "\\Test") # !Debugging
+#echo $(escape_backward_slashes "\\Test") # !Debugging
 
 # Modified from source: https://gist.github.com/TrinityCoder/911059c83e5f7a351b785921cf7ecdaa#file-center_text_in_bash-md
 function print_centered {
