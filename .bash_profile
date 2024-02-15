@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Umask (rwx) owner/group/others 1-Turns Off
 # TODO I'd like to have a minimum mask and bitwise and it with the current mask.
 #  in that case its already more strict and I would want to keep that.
