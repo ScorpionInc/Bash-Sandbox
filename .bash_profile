@@ -3,6 +3,17 @@
 #  in that case its already more strict and I would want to keep that.
 umask 037
 
+# Fetch aliases for Bash profile.
+if [ -n "$BASH_VERSION" ]; then
+	if [ ! -f "${HOME}/.bash_aliases" ]; then
+		if which wget >/dev/null ; then
+			wget -O "${HOME}/.bash_aliases" https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bash_aliases
+		elif which curl >/dev/null ; then
+			curl -o "${HOME}/.bash_aliases" https://github.com/ScorpionInc/Bash-Sandbox/raw/main/.bash_aliases
+		fi
+	fi
+fi
+
 # Loads function(s) script(s) from path similar to alias scripts above.
 #if [ -f "${HOME}/.bash_functions" ]; then
 #	source "${HOME}/.bash_functions"
@@ -222,9 +233,6 @@ openssl_digests=("blake2b512" "blake2s256" "md4" "md5" "mdc2" "rmd160" "sha1" "s
 # /usr/bin/{$i}sum
 sum_digests=("b2" "ck" "md5" "sha1" "sha224" "sha256" "sha384" "sha512")
 # blake2b512 CRC32(?) md5
-
-alias cls='clear'
-alias ps='ps -elf'
 
 clear
 echo_profile_banner
