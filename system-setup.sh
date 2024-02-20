@@ -15,7 +15,7 @@ autoPurged=("aisleriot" "brltty" "duplicity" "empathy" "empathy-call" "empathy-c
 autoInstallAPTBase=("htop" "flatpak" "libreoffice" "wget")
 autoInstallDEBBase=()
 # ufw nftable
-autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker" "curl")
+autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker" "curl" "qemu-system" "qemu-user-static")
 autoInstallDEBWork=()
 autoInstallAPTGame=("wine")
 autoInstallDEBGame=()
