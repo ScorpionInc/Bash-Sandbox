@@ -15,7 +15,7 @@ autoPurged=("aisleriot" "brltty" "duplicity" "empathy" "empathy-call" "empathy-c
 autoInstallAPTBase=("htop" "flatpak" "libreoffice" "wget")
 autoInstallDEBBase=()
 # ufw nftable
-autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker" "curl" "qemu-system" "qemu-user-static")
+autoInstallAPTWork=("proxychains" "sshpass" "putty" "python3-full" "python3-pip" "iptables" "wireshark" "tshark" "xxd" "openjdk-11-jdk" "docker" "curl" "qemu-system" "qemu-user-static" "mariadb-server" "mariadb-client" "php")
 autoInstallDEBWork=()
 autoInstallAPTGame=("wine")
 autoInstallDEBGame=()
@@ -93,6 +93,8 @@ case $installType in
 		do
 			apt-get install -y "${autoInstallAPTWork[$c]}"
 		done
+		sudo a2enmod headers
+		sudo service apache2 restart
 		;;
 	("Game")
 		for (( c=0; c<${#autoInstallAPTGame[@]}; c++ ))
