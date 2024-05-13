@@ -4,7 +4,8 @@
 temprepo=$(mktemp -d "$BASH_SOURCE".XXXXXX)
 tempfile=$(mktemp "$BASH_SOURCE".XXXXXX)
 echo "$temprepo $tempfile"
-rm -f -- "$tempfile"
+rm -f "$tempfile"
 time git clone --no-checkout --depth 1 https://github.com/ScorpionInc/Bash-Sandbox.git "$temprepo"
-git -C "$temprepo" ls-tree --full-name --name-only -r HEAD | grep -E '^Profile[/\]+.*[.]sha512$'
+profileHashes=$(git -C "$temprepo" ls-tree --full-name --name-only -r HEAD | grep -E '^Profile[/\]+.*[.]sha512$')
+echo "$profileHashes"
 rm -rf "$temprepo"

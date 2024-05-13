@@ -159,6 +159,8 @@ do
 	if [[ $lastflagindex -eq $# ]]
 	then
 		#echo "[DEBUG]: All files in cwd."
+		OFS="$IFS"
+		IFS=$'\n'
 		for f in $(find . -type f)
 		do
 			if [[ "${#runhashcmds[@]}" == "1" ]]
@@ -168,8 +170,9 @@ do
 				echo -n "${hashmarks[rhci]}"
 			fi
 			#echo "[DEBUG]: Hashing File: $f"
-			$rhc $f
+			$rhc "$f"
 		done
+		IFS="$OFS"
 	else
 		#echo "[DEBUG]: Files/Folders are specifed after flag index."
 		for pfi in $(seq $(($lastflagindex + 1)) 1 $#)
@@ -188,6 +191,8 @@ do
 			elif [ -d "${!pfi}" ]
 			then
 				#Target specified is a directory.
+				OFS="$IFS"
+				IFS=$'\n'
 				for f in $(find "${!pfi}" -type f)
 				do
 					#echo "[DEBUG]: Hash target dir->file: $f"
@@ -199,6 +204,7 @@ do
 					fi
 					$rhc "$f"
 				done
+				IFS="$OFS"
 			else
 				#Target is invalid
 				echo "[ERROR]: Invalid parameter: '${!pfi}'."
