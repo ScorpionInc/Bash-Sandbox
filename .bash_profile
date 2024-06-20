@@ -39,6 +39,28 @@ update_scripts(){
 	echo update scripts was called.
 }
 
+# Pings the default gateway to test basic network availability.
+ping_default_gateway(){
+	return $(ping -q -w 1 -c 1 `ip r | grep default | cut -d ' ' -f 3` > /dev/null);
+}
+# Updates system files / programs & libraries using first available package manager.
+dist_upgrade(){
+	if [ $(dpkg-query -W -f='${Status}' 'apt' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		# Test if we are on a network
+		if ! ping_default_gateway; then
+			# If there is not a current network response,
+			# Try enabling the wifi if network-manager is installed.
+			# For some reason it is off by default on my current installation.
+			if [ $(dpkg-query -W -f='${Status}' 'network-manager' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+				sudo nmcli radio wifi on
+			fi
+		fi
+		sudo apt-get update --fix-missing && sudo apt dist-upgrade --fix-missing
+	else
+		echo "[ERROR]: No package manager found." # Debugging
+	fi
+}
+
 # Attempts to detect the init system installed on the current box by looking at /sbin/init.
 # Modified from code: https://unix.stackexchange.com/a/325832
 find_init_type(){
