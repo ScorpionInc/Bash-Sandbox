@@ -54,6 +54,7 @@ dist_upgrade(){
 			# For some reason it is off by default on my current installation.
 			if [ $(dpkg-query -W -f='${Status}' 'network-manager' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 				sudo nmcli radio wifi on
+				sleep 3
 			else
 				return 0;
 			fi
