@@ -60,25 +60,24 @@ dist_upgrade(){
 			fi
 		fi
 		sudo apt-get update --fix-missing && sudo apt dist-upgrade --fix-missing || return 0;
-		return 1;
 	elif [ $(dpkg-query -W -f='${Status}' 'yum' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		# Fedora
 		sudo yum update || return 0;
-		return 1;
 	elif [ $(dpkg-query -W -f='${Status}' 'pacman' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		# Arch
 		sudo pacman -Syu || return 0;
-		return 1;
 	elif [ $(dpkg-query -W -f='${Status}' 'emerge' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		# Gentoo / Portage
 		emerge -uDNav world || return 0;
-		return 1;
 	else
 		echo "[ERROR]: No package manager found." # Debugging
 		return 0;
 	fi
-	# Unreachable code. Here be dragons.
-	return 0;
+	# Update Snap installation(s)
+	if [ $(dpkg-query -W -f='${Status}' 'snap' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		sudo snap refresh;
+	fi
+	return 1;
 }
 
 # Attempts to detect the init system installed on the current box by looking at /sbin/init.
