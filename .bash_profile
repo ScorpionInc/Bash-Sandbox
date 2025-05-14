@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Fail fast with a concise message when not using bash
+# Single brackets are needed here for POSIX compatibility
+# shellcheck disable=SC2292
+if [ -z "${BASH_VERSION:-}" ]; then
+	abort "The Bash Shell is required to interpret this script."
+fi
+
 # Umask (rwx) owner/group/others 1-Turns Off
 # TODO I'd like to have a minimum mask and bitwise and it with the current mask.
 #  in that case its already more strict and I would want to keep that.
@@ -45,20 +52,23 @@ ping_default_gateway(){
 }
 # Updates system files / programs & libraries using first available package manager.
 dist_upgrade(){
+	# Test if we are on a network
+	if ! ping_default_gateway; then
+		# No current network response.
+		# If network-manager is installed, Try enabling the wifi.
+		if [ $(dpkg-query -W -f='${Status}' 'network-manager' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+			# For some reason it is off by default on my current installation.
+			sudo nmcli radio wifi on
+			sleep 3
+		fi
+		# If using rfkill, unblock all wifi interfaces (not bluetooth)
+		if [ $(dpkg-query -W -f='${Status}' 'rfkill' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+			sudo rfkill unblock wlan
+			sleep 3
+		fi
+	fi
 	if [ $(dpkg-query -W -f='${Status}' 'apt' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		# Debian / Ubuntu
-		# Test if we are on a network
-		if ! ping_default_gateway; then
-			# If there is not a current network response,
-			# Try enabling the wifi if network-manager is installed.
-			# For some reason it is off by default on my current installation.
-			if [ $(dpkg-query -W -f='${Status}' 'network-manager' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
-				sudo nmcli radio wifi on
-				sleep 3
-			else
-				return 0;
-			fi
-		fi
 		sudo apt-get update --fix-missing && sudo apt dist-upgrade --fix-missing || return 0;
 	elif [ $(dpkg-query -W -f='${Status}' 'yum' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		# Fedora
@@ -73,11 +83,49 @@ dist_upgrade(){
 		echo "[ERROR]: No package manager found." # Debugging
 		return 0;
 	fi
-	# Update Snap installation(s)
+	# Update Snap installation(s) if snap is installed
 	if [ $(dpkg-query -W -f='${Status}' 'snap' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		sudo snap refresh;
 	fi
+	# If using systemd, Update the message catalog index.
+	# This needs to execute each time catalog files are changed to rebuild the binary catalog index.
+	if [ $(dpkg-query -W -f='${Status}' 'systemd' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		sudo journalctl --update-catalog
+	fi
 	return 1;
+}
+# Cleans some cached files history and old logs to reduce secondary memory usage.
+dist_clean(){
+	# Remove unused packages via cow powers
+	if [ $(dpkg-query -W -f='${Status}' 'apt' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		sudo apt-get autoremove
+		sudo apt-get autoclean
+	fi
+	# Removes old revisions of snaps
+	if [ $(dpkg-query -W -f='${Status}' 'snap' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		snap list --all | awk '/disabled/{print $1, $3}' |
+		while read snapname revision; do
+			snap remove "$snapname" --revision="$revision"
+		done
+	fi
+	# Clear Thumbnail image cache
+	sudo rm -rf /home/*/.cache/thumbnails/*
+	# Clean dangling Docker image files
+	if [ $(dpkg-query -W -f='${Status}' 'docker' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		echo 'y' | docker image prune
+	fi
+	# Clean dangling Podman image files
+	if [ $(dpkg-query -W -f='${Status}' 'podman' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		echo 'y' | podman image prune
+	fi
+	# If using systemd, Remove logs older than one month
+	if [ $(dpkg-query -W -f='${Status}' 'systemd' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		sudo journalctl --disk-usage
+		sudo journalctl --vacuum-time=30d
+		sudo journalctl --disk-usage
+	fi
+	# Uses coreutils package.
+	df
 }
 
 # Attempts to detect the init system installed on the current box by looking at /sbin/init.
