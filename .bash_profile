@@ -87,6 +87,10 @@ dist_upgrade(){
 	if [ $(dpkg-query -W -f='${Status}' 'snap' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
 		sudo snap refresh;
 	fi
+	# Update flatpak if it's is installed
+	if [ $(dpkg-query -W -f='${Status}' 'flatpak' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
+		flatpak update
+	fi
 	# If using systemd, Update the message catalog index.
 	# This needs to execute each time catalog files are changed to rebuild the binary catalog index.
 	if [ $(dpkg-query -W -f='${Status}' 'systemd' 2>/dev/null | grep -c "ok installed") -eq 1 ]; then
